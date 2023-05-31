@@ -16,9 +16,7 @@ A Discord bot with features including Riot API integration, music playback, and 
 - Add the following environment variables to the .env file:
    ```bash
      DISCORD_TOKEN=<your_discord_token>
-  
-   ```bash
-   RIOT_API_KEY=<your_riot_api_key>
+     RIOT_API_KEY=<your_riot_api_key>
 
 ### Usage
 
