@@ -1,6 +1,6 @@
 module.exports = {
   name: "pause",
-  description: "pause the track",
+  description: "Pause the track",
   voiceChannel: true,
 
   execute({ client, interaction }) {

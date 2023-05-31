@@ -1,6 +1,6 @@
 module.exports = {
   name: "skip",
-  description: "skip to the next song",
+  description: "Skip to the next song",
   voiceChannel: true,
 
   execute({ client, interaction }) {

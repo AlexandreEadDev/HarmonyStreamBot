@@ -1,6 +1,6 @@
 module.exports = {
   name: "resume",
-  description: "play the track",
+  description: "Resume the track",
   voiceChannel: true,
 
   execute({ client, interaction }) {

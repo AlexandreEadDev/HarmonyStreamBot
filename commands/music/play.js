@@ -1,12 +1,12 @@
 const { ApplicationCommandOptionType } = require("discord.js");
 module.exports = {
   name: "play",
-  description: "play a song!",
+  description: "Play a song!",
   voiceChannel: true,
   options: [
     {
       name: "song",
-      description: "the song you want to play",
+      description: "The song you want to play",
       type: ApplicationCommandOptionType.String,
       required: true,
     },

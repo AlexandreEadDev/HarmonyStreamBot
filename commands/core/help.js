@@ -5,16 +5,14 @@ module.exports = {
     const prefix = "/";
     interaction.reply(
       `**${prefix}help**: List all commands
-    **${prefix}joke**: Tell a joke
+    **${prefix}jokes**: Tell a joke
     **${prefix}portfolio**: Redirect to my portfolio page
     **${prefix}profile**: Get data from a League of Legends user
     **Music Commands**
     **${prefix}play**: Play a song
     **${prefix}back**: Go back to the previous song
-    **${prefix}clear**: Clear the queue
     **${prefix}controller**: Show the music controller
     **${prefix}loop**: Loop the queue or song
-    **${prefix}next**: Play the next song
     **${prefix}nowplaying**: Show the currently playing song
     **${prefix}pause**: Pause the music
     **${prefix}queue**: Show the music queue

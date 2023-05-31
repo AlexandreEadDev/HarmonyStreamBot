@@ -3,7 +3,7 @@ const { ApplicationCommandOptionType } = require("discord.js");
 
 module.exports = {
   name: "volume",
-  description: "adjust",
+  description: "Adjust",
   voiceChannel: true,
   options: [
     {

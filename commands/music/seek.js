@@ -5,12 +5,12 @@ const {
 
 module.exports = {
   name: "seek",
-  description: "skip back or foward in a song",
+  description: "Skip back or foward in a song",
   voiceChannel: true,
   options: [
     {
       name: "time",
-      description: "time that you want to skip to",
+      description: "Time that you want to skip to",
       type: ApplicationCommandOptionType.String,
       required: true,
     },

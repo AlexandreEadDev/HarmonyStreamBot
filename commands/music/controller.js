@@ -8,13 +8,13 @@ const {
 
 module.exports = {
   name: "controller",
-  description: "set controller channel ",
+  description: "Set controller channel ",
   voiceChannel: false,
   permissions: PermissionFlagsBits.BanMembers,
   options: [
     {
       name: "channel",
-      description: "the channel you want to send it to",
+      description: "The channel you want to send it to",
       type: ApplicationCommandOptionType.Channel,
       required: true,
     },
@@ -23,7 +23,7 @@ module.exports = {
     let Channel = interaction.options.getChannel("channel");
     if (Channel.type !== 0)
       return interaction.reply({
-        content: `you have to send it to a text channel.. ❌`,
+        content: `You have to send it to a text channel.. ❌`,
         ephemeral: true,
       });
 
