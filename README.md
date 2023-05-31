@@ -15,7 +15,7 @@ A Discord bot with features including Riot API integration, music playback, and 
 - Create a .env file in the root directory.
 - Add the following environment variables to the .env file:
   ```DISCORD_TOKEN=<your_discord_token>
-     RIOT_API_KEY=<your_riot_api_key>
+  ```RIOT_API_KEY=<your_riot_api_key>
 
 ### Usage
 
