@@ -47,6 +47,6 @@ To start the bot, run the following command: npm start
   - stop: Stop the music.
   - volume: Change the volume of the music.
 
-###Contributing
+### Contributing
 
 Contributions are welcome! If you have any suggestions, improvements, or bug fixes, please open an issue or submit a pull request.
