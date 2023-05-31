@@ -60,7 +60,7 @@ module.exports = {
       .setThumbnail(currentSong.thumbnail)
       .setDescription(
         `Volume **${queue.volume
-        }\nLoop mode :${repeat
+        }\nLoop mode  ${repeat
         }**\nRequested by ${currentSong.user}`
       )
       .addFields(
@@ -98,10 +98,10 @@ module.exports = {
 
     const row = new ActionRowBuilder().addComponents(
       volumedown,
+      volumeup,
       saveButton,
       resumepause,
-      loop,
-      volumeup
+      loop
     );
 
     interaction.reply({ embeds: [embed], components: [row] });

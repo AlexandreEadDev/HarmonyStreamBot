@@ -17,8 +17,8 @@ module.exports = {
       ],
     },
   ],
-  execute({ interaction }) {
-    const queue = player.getQueue(interaction.guildId);
+  execute({ client, interaction }) {
+    const queue = client.player.getQueue(interaction.guildId);
 
     if (!queue || !queue.playing)
       return interaction.reply({
@@ -28,47 +28,55 @@ module.exports = {
     switch (
     interaction.options._hoistedOptions.map((x) => x.value).toString()
     ) {
+
       case "enable_loop_queue": {
-        if (queue.repeatMode === 1)
-          return interaction.reply({
-            content: `You must first disable the current music in the loop mode (/loop Disable) ${interaction.member}... try again ? ❌`,
-            ephemeral: true,
-          });
-
-        const success = queue.setRepeatMode(QueueRepeatMode.QUEUE);
-
-        return interaction.reply({
-          content: success
-            ? `Repeat mode **enabled** the whole queue will be repeated endlessly 🔁`
-            : `Something went wrong ${interaction.member}... try again ? ❌`,
-        });
-        break;
-      }
-      case "disable_loop": {
-        const success = queue.setRepeatMode(QueueRepeatMode.OFF);
-
-        return interaction.reply({
-          content: success
-            ? `Repeat mode **disabled**`
-            : `Something went wrong ${interaction.member}... try again ? ❌`,
-        });
-        break;
-      }
-      case "enable_loop_song": {
         if (queue.repeatMode === 2)
           return interaction.reply({
             content: `You must first disable the current music in the loop mode (/loop Disable) ${interaction.member}... try again ? ❌`,
             ephemeral: true,
           });
 
-        const success = queue.setRepeatMode(QueueRepeatMode.TRACK);
+        const success1 = queue.setRepeatMode(2)
 
         return interaction.reply({
-          content: success
-            ? `Repeat mode **enabled** the current song will be repeated endlessly (you can end the loop with /loop disable)`
+          content: success1
+            ? "Queue Loop Mode 🔁"
             : `Something went wrong ${interaction.member}... try again ? ❌`,
         });
-        break;
+      }
+
+      case "disable_loop": {
+        if (queue.repeatMode === 0)
+          return interaction.reply({
+            content: "Loop mode is already inactive. ❌",
+            ephemeral: true,
+          });
+
+        const success2 = queue.setRepeatMode(0)
+
+        return interaction.reply({
+          content: success2
+            ? `Something went wrong ${interaction.member}... try again ? ❌`
+            : `Loop Mode **Closed** 🔁`,
+        });
+      }
+
+
+      case "enable_loop_song": {
+        if (queue.repeatMode === 1)
+          return interaction.reply({
+            content: `You must first disable the current music in the loop mode (/loop Disable) ${interaction.member}... try again ? ❌`,
+            ephemeral: true,
+          });
+
+        const success3 = queue.setRepeatMode(1);
+
+        return interaction.reply({
+          content: success3
+            ? "Now Playing Music Loop Mode 🔁"
+            : `Something went wrong ${interaction.member}... try again ? ❌`,
+        });
+
       }
     }
   },

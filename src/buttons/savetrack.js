@@ -1,38 +1,45 @@
 const { EmbedBuilder } = require("discord.js");
 
 module.exports = async ({ interaction, queue }) => {
-  if (!queue || !queue.playing)
+  let currentSong
+
+  if (!queue || !queue.playing) {
+
     return interaction.reply({
       content: `No music currently playing... try again ? ❌`,
       ephemeral: true,
     });
+  } else {
+    currentSong = queue.songs[0]
+
+  }
 
   interaction.member
     .send({
       embeds: [
         new EmbedBuilder()
           .setColor("Red")
-          .setTitle(`:arrow_forward: ${queue.current.title}`)
-          .setURL(queue.current.url)
+          .setTitle(`:arrow_forward: ${currentSong.name}`)
+          .setURL(currentSong.url)
           .addFields(
             {
               name: ":hourglass: Duration:",
-              value: `\`${queue.current.duration}\``,
+              value: `\`${currentSong.formattedDuration}\``,
               inline: true,
             },
             {
               name: "Song by:",
-              value: `\`${queue.current.author}\``,
+              value: `\`${currentSong.uploader.name}\``,
               inline: true,
             },
             {
               name: "Views :eyes:",
-              value: `\`${Number(queue.current.views).toLocaleString()}\``,
+              value: `\`${Number(currentSong.views).toLocaleString()}\``,
               inline: true,
             },
-            { name: "Song URL:", value: `\`${queue.current.url}\`` }
+            { name: "Song URL:", value: `\`${currentSong.url}\`` }
           )
-          .setThumbnail(queue.current.thumbnail)
+          .setThumbnail(currentSong.thumbnail)
           .setFooter({
             text: `from the server ${interaction.member.guild.name}`,
             iconURL: interaction.member.guild.iconURL({ dynamic: false }),

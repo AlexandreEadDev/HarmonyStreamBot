@@ -16,8 +16,8 @@ module.exports = {
     },
   ],
 
-  execute({ interaction }) {
-    const queue = player.getQueue(interaction.guildId);
+  execute({ client, interaction }) {
+    const queue = client.player.getQueue(interaction.guildId);
 
     if (!queue)
       return interaction.reply({

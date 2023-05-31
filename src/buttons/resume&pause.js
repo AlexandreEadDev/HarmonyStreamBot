@@ -14,7 +14,6 @@ module.exports = async ({ interaction, queue }) => {
 
   if (isPaused === false) queue.pause()
 
-  console.log(isPaused);
 
   if (isPaused === true) queue.resume()
 

@@ -1,35 +1,67 @@
 const { EmbedBuilder } = require("discord.js");
-module.exports = async ({ client, interaction, queue }) => {
-  if (!queue || !queue.playing)
+module.exports = async ({ interaction, queue }) => {
+  let currentSong
+  let currentTime
+  let totalTime
+  let progressBar
+
+
+  function convertTimeToSeconds(time) {
+    const [minutes, seconds] = time.split(':').map(Number);
+    return minutes * 60 + seconds;
+  }
+
+  function createProgressBar(currentTime, totalTime, barLength = 10) {
+    const progress = Math.min((currentTime / totalTime) * barLength, barLength);
+    const progressBar = '▬'.repeat(progress) + '🔘' + '▬'.repeat(barLength - progress);
+    const percentage = Math.floor((currentTime / totalTime) * 100);
+
+    return `${progressBar} ${percentage}%`;
+  }
+
+
+
+
+  if (!queue) {
     return interaction.reply({
-      content: `No music currently playing... try again ? ❌`,
+      content: `No music currently playing ${interaction.member}... try again ? ❌`,
       ephemeral: true,
-    });
+    })
+  } else {
+    currentSong = queue.songs[0]
+    currentTime = convertTimeToSeconds(queue.formattedCurrentTime);
+    totalTime = convertTimeToSeconds(currentSong.formattedDuration);
+    progressBar = createProgressBar(currentTime, totalTime);
+  }
 
-  const track = queue.current;
+  let repeat
 
-  const methods = ["disabled", "track", "queue"];
+  if (queue.repeatMode === 0) {
+    repeat = "Disable"
+  } else if (queue.repeatMode === 1) {
+    repeat = "Enable for this song"
+  } else if (queue.repeatMode === 2) {
+    repeat = "Enable for all songs"
+  }
 
-  const timestamp = queue.getPlayerTimestamp();
-
-  const trackDuration =
-    timestamp.progress == "Infinity" ? "infinity (live)" : track.duration;
-
-  const progress = queue.createProgressBar();
 
   const embed = new EmbedBuilder()
+    .setColor('#00FF00')
     .setAuthor({
-      name: track.title,
-      iconURL: client.user.displayAvatarURL({ size: 1024, dynamic: true }),
+      name: `${currentSong.name} | ${currentSong.uploader.name}`,
     })
-    .setThumbnail(track.thumbnail)
+    .setThumbnail(currentSong.thumbnail)
     .setDescription(
       `Volume **${queue.volume
-      }**%\nDuration **${trackDuration}**\nProgress ${progress}\nLoop mode **${methods[queue.repeatMode]
-      }**\nRequested by ${track.requestedBy}`
+      }\nLoop mode ${repeat
+      }**\nRequested by ${currentSong.user}`
     )
-    .setColor("ff0000")
-    .setTimestamp();
+    .addFields(
+      { name: 'Current Time', value: queue.formattedCurrentTime, inline: true },
+      { name: 'Progress', value: progressBar, inline: true },
+      { name: 'Total Time', value: currentSong.formattedDuration, inline: true }
+    )
 
+    .setTimestamp();
   interaction.reply({ embeds: [embed], ephemeral: true });
 };

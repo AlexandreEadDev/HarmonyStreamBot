@@ -1,12 +1,12 @@
 module.exports = {
   name: "skip",
-  description: "stop the track",
+  description: "skip to the next song",
   voiceChannel: true,
 
   execute({ client, interaction }) {
     const queue = client.player.getQueue(interaction.guildId);
     let currentSong
-
+    let success
 
     if (!queue) {
       return interaction.reply({
@@ -17,7 +17,16 @@ module.exports = {
       currentSong = queue.songs[0]
     }
 
-    const success = queue.skip();
+    if (queue.songs.length <= 1) {
+      return interaction.reply({
+        content: `There is no music played after${interaction.member}... try again ? ❌`,
+        ephemeral: true,
+      });
+    } else {
+      success = queue.skip();
+
+    }
+
 
     return interaction.reply({
       content: success
