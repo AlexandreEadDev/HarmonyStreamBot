@@ -13,7 +13,7 @@ module.exports = async ({ interaction, queue }) => {
 
   if (queue.songs.length <= 1) {
     return interaction.reply({
-      content: `there is no music played after${interaction.member}... try again ? ❌`,
+      content: `There is no music played after${interaction.member}... try again ? ❌`,
       ephemeral: true,
     });
   } else {
