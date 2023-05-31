@@ -10,7 +10,7 @@ global.client = new Client({
   partials: [
     Partials.Channel,
     Partials.GuildMember,
-    Partials.User, 
+    Partials.User,
   ],
   intents: [
     GatewayIntentBits.Guilds,
