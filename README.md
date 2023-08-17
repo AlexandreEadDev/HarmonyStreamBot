@@ -7,7 +7,7 @@ A Discord bot with features including Riot API integration, music playback, and 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/AlexandreEadDev/Portfolio-DiscordBot.git
+   git clone https://github.com/AlexandreEadDev/DiscordBot.git
 
 2. Install the dependencies: npm install
 
