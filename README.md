@@ -16,7 +16,7 @@ A Discord bot with features including Riot API integration, music playback, and 
 - Add the following environment variables to the .env file:
    ```bash
      DISCORD_TOKEN=<your_discord_token>
-     RIOT_API_KEY=<your_riot_api_key>
+   
 
 ### Usage
 
@@ -27,12 +27,9 @@ To start the bot, run the following command: npm start
 - Admin Commands
   - ban: Ban a user from the server.
   - delete: Delete multiple messages at once.
-  - mute: Mute a user in the server.
 - Other Commands
   - help: Display a list of available commands.
   - jokes: Tell a random joke.
-  - portfolio: Redirect to my GitHub portfolio page.
-  - profile: Get data from a League of Legends user.
 - Music Commands
   - play: Play a song.
   - back: Go back to the previous song.
