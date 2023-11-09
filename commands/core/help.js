@@ -6,8 +6,6 @@ module.exports = {
     interaction.reply(
       `**${prefix}help**: List all commands
     **${prefix}jokes**: Tell a joke
-    **${prefix}portfolio**: Redirect to my portfolio page
-    **${prefix}profile**: Get data from a League of Legends user
     **Music Commands**
     **${prefix}play**: Play a song
     **${prefix}back**: Go back to the previous song
