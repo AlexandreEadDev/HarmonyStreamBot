@@ -1,6 +1,7 @@
-# DiscordBot
+# HarmonyStreamBot
 
 A Discord bot music playback.
+
 
 ### Installation
 
@@ -17,10 +18,10 @@ A Discord bot music playback.
    ```bash
      DISCORD_TOKEN=<your_discord_token>
    
-
 ### Usage
 
 To start the bot, run the following command: npm start
+
 
 ### Features
 
@@ -40,14 +41,14 @@ To start the bot, run the following command: npm start
 - Other Commands
   - help: Display a list of available commands.
   - jokes: Tell a random joke.
+    
 
-### Demo
+### Add HarmonyStreamBot to Discord
 
 1. Link:
 
    ```bash
    https://discord.com/api/oauth2/authorize?client_id=1111317939744935957&permissions=40671527795568&scope=bot
-
 
 ### Contributing
 
