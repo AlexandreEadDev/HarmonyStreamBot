@@ -1,6 +1,6 @@
 # DiscordBot
 
-A Discord bot with features including Riot API integration, music playback, and moderation commands.
+A Discord bot music playback.
 
 ### Installation
 
@@ -24,12 +24,6 @@ To start the bot, run the following command: npm start
 
 ### Features
 
-- Admin Commands
-  - ban: Ban a user from the server.
-  - delete: Delete multiple messages at once.
-- Other Commands
-  - help: Display a list of available commands.
-  - jokes: Tell a random joke.
 - Music Commands
   - play: Play a song.
   - back: Go back to the previous song.
@@ -43,6 +37,9 @@ To start the bot, run the following command: npm start
   - skip: Skip the current song.
   - stop: Stop the music.
   - volume: Change the volume of the music.
+- Other Commands
+  - help: Display a list of available commands.
+  - jokes: Tell a random joke.
 
 ### Contributing
 
