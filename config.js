@@ -5,7 +5,6 @@ module.exports = {
     token: process.env.TOKEN,
     playing: "Bot Discord",
     global: true,
-    guild: process.env.GUILD_ID,
   },
 
   opt: {
@@ -15,13 +14,13 @@ module.exports = {
       commands: [],
     },
     voiceConfig: {
-      leaveOnFinish: false, 
-      leaveOnStop: false, 
-      leaveOnEmpty: { 
+      leaveOnFinish: false,
+      leaveOnStop: false,
+      leaveOnEmpty: {
         status: true,
         cooldown: 10000000,
-        },
       },
+    },
     maxVol: 100,
     leaveOnEnd: true,
     loopMessage: false,
