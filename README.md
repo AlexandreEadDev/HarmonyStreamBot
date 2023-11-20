@@ -41,6 +41,14 @@ To start the bot, run the following command: npm start
   - help: Display a list of available commands.
   - jokes: Tell a random joke.
 
+### Demo
+
+1. Link:
+
+   ```bash
+   https://discord.com/api/oauth2/authorize?client_id=1111317939744935957&permissions=40671527795568&scope=bot
+
+
 ### Contributing
 
 Contributions are welcome! If you have any suggestions, improvements, or bug fixes, please open an issue or submit a pull request.
