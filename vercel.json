@@ -12,5 +12,14 @@
       "src": "/(.*)",
       "dest": "index.js"
     }
+  ],
+  "ignore": [
+    "node_modules",
+    "dist",
+    ".git",
+    ".github",
+    "vercel.json",
+    "README.md",
+    "LICENSE"
   ]
 }
