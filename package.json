@@ -31,6 +31,6 @@
     "formidable": "^3.5.1",
     "libsodium-wrappers": "^0.7.13",
     "opusscript": "^0.0.8",
-    "superagent": "^8.1.2"
+    "superagent": "^7.0.2"
   }
 }
