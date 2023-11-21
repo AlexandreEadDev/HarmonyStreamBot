@@ -1,5 +1,5 @@
-
 const { Client, GatewayIntentBits, Partials } = require("discord.js");
+
 const { DisTube } = require("distube");
 const { SpotifyPlugin } = require("@distube/spotify");
 const { SoundCloudPlugin } = require("@distube/soundcloud");
@@ -7,11 +7,7 @@ const { DeezerPlugin } = require("@distube/deezer");
 const { YtDlpPlugin } = require("@distube/yt-dlp");
 
 global.client = new Client({
-  partials: [
-    Partials.Channel,
-    Partials.GuildMember,
-    Partials.User,
-  ],
+  partials: [Partials.Channel, Partials.GuildMember, Partials.User],
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMembers,
@@ -19,7 +15,7 @@ global.client = new Client({
     GatewayIntentBits.GuildVoiceStates,
   ],
 });
-
+client.setMaxListeners(20);
 client.config = require("./config");
 
 client.player = new DisTube(client, {
@@ -32,7 +28,7 @@ client.player = new DisTube(client, {
     new SpotifyPlugin(),
     new SoundCloudPlugin(),
     new YtDlpPlugin(),
-    new DeezerPlugin()
+    new DeezerPlugin(),
   ],
 });
 
