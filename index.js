@@ -2,7 +2,6 @@ const { Client, GatewayIntentBits, Partials } = require("discord.js");
 
 const { DisTube } = require("distube");
 const { SpotifyPlugin } = require("@distube/spotify");
-const { SoundCloudPlugin } = require("@distube/soundcloud");
 const { DeezerPlugin } = require("@distube/deezer");
 const { YtDlpPlugin } = require("@distube/yt-dlp");
 
@@ -19,17 +18,10 @@ client.setMaxListeners(20);
 client.config = require("./config");
 
 client.player = new DisTube(client, {
-  leaveOnStop: client.config.opt.voiceConfig.leaveOnStop,
-  leaveOnFinish: client.config.opt.voiceConfig.leaveOnFinish,
   emitNewSongOnly: true,
   emitAddSongWhenCreatingQueue: false,
   emitAddListWhenCreatingQueue: false,
-  plugins: [
-    new SpotifyPlugin(),
-    new SoundCloudPlugin(),
-    new YtDlpPlugin(),
-    new DeezerPlugin(),
-  ],
+  plugins: [new SpotifyPlugin(), new YtDlpPlugin(), new DeezerPlugin()],
 });
 
 global.player = client.player;
