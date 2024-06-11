@@ -18,6 +18,8 @@ client.setMaxListeners(20);
 client.config = require("./config");
 
 client.player = new DisTube(client, {
+  leaveOnStop: client.config.opt.voiceConfig.leaveOnStop,
+  leaveOnFinish: client.config.opt.voiceConfig.leaveOnFinish,
   emitNewSongOnly: true,
   emitAddSongWhenCreatingQueue: false,
   emitAddListWhenCreatingQueue: false,
