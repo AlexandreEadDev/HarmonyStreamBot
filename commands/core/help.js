@@ -6,6 +6,7 @@ module.exports = {
     interaction.reply(
       `**${prefix}help**: List all commands
     **${prefix}jokes**: Tell a joke
+    **${prefix}del**: Deletes a specified number of messages
     **Music Commands**
     **${prefix}play**: Play a song
     **${prefix}back**: Go back to the previous song
