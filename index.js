@@ -5,7 +5,7 @@ const { SpotifyPlugin } = require("@distube/spotify");
 const { DeezerPlugin } = require("@distube/deezer");
 const { YtDlpPlugin } = require("@distube/yt-dlp");
 
-//TEST
+//TEST 2
 
 global.client = new Client({
   partials: [Partials.Channel, Partials.GuildMember, Partials.User],
