@@ -31,8 +31,5 @@
     "formidable": "^3.5.1",
     "libsodium-wrappers": "^0.7.13",
     "opusscript": "^0.0.8"
-  },
-  "devDependencies": {
-    "husky": "^9.0.11"
   }
 }
