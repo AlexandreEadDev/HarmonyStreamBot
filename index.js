@@ -26,14 +26,30 @@ client.setMaxListeners(20);
 
 client.config = require("./config");
 
+let cookies;
+try {
+  cookies = require("./cookies.json");
+} catch (e) {
+  console.log(
+    "Aucun fichier cookies.json trouvé, le bot risque d'être bloqué par YouTube sur un VPS."
+  );
+}
+
 // Initialisation du player de musique DisTube
-// CORRECTION: Suppression de leaveOnStop et leaveOnFinish qui causent le crash en v5
 client.player = new DisTube(client, {
   emitNewSongOnly: true,
   emitAddSongWhenCreatingQueue: false,
   emitAddListWhenCreatingQueue: false,
+  youtubeCookie: cookies,
   // Ajoute les plugins pour la compatibilité avec Spotify, YouTube-DLP (pour YouTube), et Deezer
-  plugins: [new SpotifyPlugin(), new DeezerPlugin(), new YtDlpPlugin()],
+  plugins: [
+    new SpotifyPlugin(),
+    new DeezerPlugin(),
+    // CONFIGURATION CRITIQUE POUR YT-DLP SUR VPS
+    new YtDlpPlugin({
+      update: true, // Force la mise à jour du binaire yt-dlp au démarrage pour éviter les erreurs "Deprecated"
+    }),
+  ],
 });
 
 // Rend le player de DisTube accessible globalement pour d'autres parties du code

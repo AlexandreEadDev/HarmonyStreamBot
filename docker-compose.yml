@@ -12,6 +12,7 @@ services:
     # (Optionnel) Si tu veux accéder aux fichiers (comme config.js) sans reconstruire l'image à chaque fois
     volumes:
       - ./config.js:/app/config.js
+      - ./cookies.json:/app/cookies.json
 
     # Pas besoin de section 'networks' complexe ni de 'ports'
     # car le bot sort directement vers Internet.
