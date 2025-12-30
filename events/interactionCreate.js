@@ -95,15 +95,28 @@ module.exports = (client, interaction) => {
 
     // Si un fichier de bouton est présent
     if (file_of_button) {
-      // Supprime le cache du fichier de bouton pour permettre le rechargement
-      delete require.cache[
-        require.resolve(`../src/buttons/${file_of_button}.js`)
-      ];
-      // Charge le fichier de bouton correspondant
-      const button = require(`../src/buttons/${file_of_button}.js`);
+      try {
+        // Note: Assurez-vous que le dossier src/buttons existe à la racine
+        const buttonPath = `../src/buttons/${file_of_button}.js`;
 
-      // Si le fichier de bouton est trouvé, exécute la fonction associée au bouton
-      if (button) return button({ client, interaction, customId, queue });
+        // Supprime le cache du fichier de bouton pour permettre le rechargement
+        delete require.cache[require.resolve(buttonPath)];
+
+        // Charge le fichier de bouton correspondant
+        const button = require(buttonPath);
+
+        // Si le fichier de bouton est trouvé, exécute la fonction associée au bouton
+        if (button) return button({ client, interaction, customId, queue });
+      } catch (err) {
+        console.error(
+          `Erreur lors du chargement du bouton ${file_of_button}:`,
+          err
+        );
+        return interaction.reply({
+          content: "Fonctionnalité du bouton non trouvée.",
+          ephemeral: true,
+        });
+      }
     }
   }
 };

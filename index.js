@@ -17,6 +17,7 @@ global.client = new Client({
     GatewayIntentBits.GuildMembers, // Permet d'accéder aux membres des serveurs
     GatewayIntentBits.GuildIntegrations, // Permet d'interagir avec les intégrations des guildes
     GatewayIntentBits.GuildVoiceStates, // Permet de surveiller l'état des channels vocaux
+    GatewayIntentBits.MessageContent, // Souvent nécessaire pour lire le contenu des messages
   ],
 });
 
@@ -26,11 +27,8 @@ client.setMaxListeners(20);
 client.config = require("./config");
 
 // Initialisation du player de musique DisTube
+// CORRECTION: Suppression de leaveOnStop et leaveOnFinish qui causent le crash en v5
 client.player = new DisTube(client, {
-  // Le bot quitte le channel vocal si la musique s'arrête
-  // leaveOnStop: client.config.opt.voiceConfig.leaveOnStop,
-  // Le bot quitte également le channel après avoir fini de lire toutes les musiques de la file d'attente
-  // leaveOnFinish: client.config.opt.voiceConfig.leaveOnFinish,
   emitNewSongOnly: true,
   emitAddSongWhenCreatingQueue: false,
   emitAddListWhenCreatingQueue: false,
@@ -42,8 +40,7 @@ client.player = new DisTube(client, {
 global.player = client.player;
 
 // Charge des fichiers externes
-require("./src/loader");
-require("./src/events");
+require("./loader");
 
 // Connecte le bot à Discord en utilisant le token fourni dans le fichier de configuration
 client.login(client.config.app.token);

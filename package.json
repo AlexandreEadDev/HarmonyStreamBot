@@ -1,6 +1,7 @@
 {
   "name": "portfolio-discordbot",
-  "version": "1.0.0",
+  "version": "1.0.2",
+  "private": true,
   "description": "Bot Discord Riot Api + Music + Moderation",
   "main": "index.js",
   "scripts": {
@@ -13,13 +14,9 @@
   },
   "author": "PropZi",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/PropZii/Portfolio-DiscordBot/issues"
-  },
   "engines": {
-    "node": ">=20.8.0"
+    "node": ">=18.0.0"
   },
-  "homepage": "https://github.com/PropZii/Portfolio-DiscordBot#readme",
   "dependencies": {
     "@discordjs/voice": "^0.18.0",
     "@distube/deezer": "^2.0.1",
@@ -28,9 +25,9 @@
     "discord.js": "^14.14.1",
     "distube": "^5.0.4",
     "dotenv": "^16.3.1",
+    "ffmpeg-static": "^5.2.0",
     "formidable": "^3.5.1",
     "libsodium-wrappers": "^0.7.13",
-    "opusscript": "^0.0.8",
-    "superagent": "^10.1.1"
+    "opusscript": "^0.0.8"
   }
 }

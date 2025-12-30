@@ -9,6 +9,9 @@ const {
 //Déclenché quand une erreur survient dans la file d'attente
 player.on("error", (queue, error) => {
   console.log(`Error emitted from the queue ${error.message}`);
+  // Eviter de crash si metadata n'existe pas
+  if (queue && queue.metadata)
+    queue.metadata.send(`Error: ${error.message}`).catch((e) => {});
 });
 
 //Déclenché quand une erreur de connexion survient
@@ -66,39 +69,47 @@ player.on("trackStart", (queue, track) => {
   );
 
   // Envoie l'embed avec les boutons dans le channel Discord où la commande a été exécutée
-  queue.metadata.send({ embeds: [embed], components: [row1] });
+  // On verifie que metadata est bien defini (c'est le channel textuel passé dans play.js)
+  if (queue.metadata) {
+    queue.metadata.send({ embeds: [embed], components: [row1] });
+  }
 });
 
 // Déclenché lorsqu'une piste est ajoutée à la file d'attente
 player.on("trackAdd", (queue, track) => {
   // Envoie un message dans le channel pour indiquer qu'une piste a été ajoutée
-  queue.metadata.send(`Track ${track.title} added in the queue ✅`);
+  if (queue.metadata)
+    queue.metadata.send(`Track ${track.title} added in the queue ✅`);
 });
 
 // Déclenché quand le bot est manuellement déconnecté du channel vocal
 player.on("botDisconnect", (queue) => {
   // Envoie un message dans le channel pour indiquer que le bot a été déconnecté et que la file d'attente est supprimée
-  queue.metadata.send(
-    "I was manually disconnected from the voice channel, clearing queue... ❌"
-  );
+  if (queue.metadata)
+    queue.metadata.send(
+      "I was manually disconnected from the voice channel, clearing queue... ❌"
+    );
 });
 
 // Déclenché quand tout le monde quitte le channel vocal
 player.on("channelEmpty", (queue) => {
   // Envoie un message dans le channel pour indiquer que le channel vocal est vide et que le bot quitte le channel
-  queue.metadata.send(
-    "Nobody is in the voice channel, leaving the voice channel... ❌"
-  );
+  if (queue.metadata)
+    queue.metadata.send(
+      "Nobody is in the voice channel, leaving the voice channel... ❌"
+    );
 });
 
 // Déclenché quand la file d'attente est terminée (toutes les pistes ont été jouées)
 player.on("queueEnd", (queue) => {
   // Envoie un message dans le channel pour indiquer que la file d'attente est terminée
-  queue.metadata.send("I finished reading the whole queue ✅");
+  if (queue.metadata)
+    queue.metadata.send("I finished reading the whole queue ✅");
 });
 
 // Déclenché lorsqu'une playlist entière est ajoutée à la file d'attente
 player.on("tracksAdd", (queue, tracks) => {
   // Envoie un message pour indiquer que toutes les pistes de la playlist ont été ajoutées à la file d'attente
-  queue.metadata.send(`All the songs in playlist added into the queue ✅`);
+  if (queue.metadata)
+    queue.metadata.send(`All the songs in playlist added into the queue ✅`);
 });
