@@ -11,12 +11,13 @@ const { YtDlpPlugin } = require("@distube/yt-dlp");
 // Création d'une instance globale de Client pour le bot Discord avec des configurations spécifiques
 global.client = new Client({
   partials: [Partials.Channel, Partials.GuildMember, Partials.User],
+  // Types d'événements que le bot surveillera
   intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMembers,
-    GatewayIntentBits.GuildIntegrations,
-    GatewayIntentBits.GuildVoiceStates,
-    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.Guilds, // Permet de gérer les serveurs Discord (guildes)
+    GatewayIntentBits.GuildMembers, // Permet d'accéder aux membres des serveurs
+    GatewayIntentBits.GuildIntegrations, // Permet d'interagir avec les intégrations des guildes
+    GatewayIntentBits.GuildVoiceStates, // Permet de surveiller l'état des channels vocaux
+    GatewayIntentBits.MessageContent, // Souvent nécessaire pour lire le contenu des messages
   ],
 });
 
@@ -25,14 +26,13 @@ client.setMaxListeners(20);
 
 client.config = require("./config");
 
-// --- GESTION DES COOKIES YOUTUBE ---
+// --- CHARGEMENT DES COOKIES ---
 let youtubeCookies = undefined;
 try {
-  // On tente de charger le fichier cookies.json
   youtubeCookies = require("./cookies.json");
-  console.log("✅ Cookies YouTube chargés avec succès.");
+  console.log("✅ Cookies YouTube chargés.");
 } catch (e) {
-  console.log("⚠️ Aucun fichier cookies.json trouvé ou fichier invalide.");
+  console.log("⚠️ Aucun fichier cookies.json trouvé.");
 }
 
 // Initialisation du player de musique DisTube
@@ -40,13 +40,13 @@ client.player = new DisTube(client, {
   emitNewSongOnly: true,
   emitAddSongWhenCreatingQueue: false,
   emitAddListWhenCreatingQueue: false,
-  // Note: On ne met PAS youtubeCookie ici, c'est ce qui causait l'erreur INVALID_KEY
+  // ATTENTION: Ne PAS mettre 'youtubeCookie' ici, cela cause l'erreur INVALID_KEY
   plugins: [
     new SpotifyPlugin(),
     new DeezerPlugin(),
     new YtDlpPlugin({
-      update: true, // Met à jour yt-dlp pour avoir les derniers correctifs
-      cookies: youtubeCookies, // <--- C'est ICI qu'il faut mettre les cookies en v5
+      update: false, // <-- IMPORTANT : Mettre false pour éviter l'erreur "Deprecated" / SyntaxError
+      cookies: youtubeCookies, // <-- Les cookies doivent être ici en V5
     }),
   ],
 });
@@ -57,5 +57,5 @@ global.player = client.player;
 // Charge des fichiers externes
 require("./loader");
 
-// Connecte le bot à Discord
+// Connecte le bot à Discord en utilisant le token fourni dans le fichier de configuration
 client.login(client.config.app.token);
