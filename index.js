@@ -43,8 +43,6 @@ client.player = new DisTube(client, {
   ffmpeg: {
     path: "ffmpeg", // On utilise "ffmpeg" (le binaire système installé via Docker)
   },
-  // On injecte ici les options définies dans config.js (qualité, buffer)
-  ytdlOptions: client.config.opt.discordPlayer.ytdlOptions,
   emitNewSongOnly: true,
   emitAddSongWhenCreatingQueue: false,
   emitAddListWhenCreatingQueue: false,
