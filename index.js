@@ -7,6 +7,7 @@ const { DisTube } = require("distube");
 const { SpotifyPlugin } = require("@distube/spotify");
 const { DeezerPlugin } = require("@distube/deezer");
 const { YtDlpPlugin } = require("@distube/yt-dlp");
+const ffmpeg = require("ffmpeg-static");
 
 // Création d'une instance globale de Client pour le bot Discord avec des configurations spécifiques
 global.client = new Client({
@@ -37,16 +38,18 @@ try {
 
 // Initialisation du player de musique DisTube
 client.player = new DisTube(client, {
+  ffmpeg: {
+    path: ffmpeg,
+  },
   emitNewSongOnly: true,
   emitAddSongWhenCreatingQueue: false,
   emitAddListWhenCreatingQueue: false,
-  // ATTENTION: Ne PAS mettre 'youtubeCookie' ici, cela cause l'erreur INVALID_KEY
   plugins: [
     new SpotifyPlugin(),
     new DeezerPlugin(),
     new YtDlpPlugin({
-      update: false, // <-- IMPORTANT : Mettre false pour éviter l'erreur "Deprecated" / SyntaxError
-      cookies: youtubeCookies, // <-- Les cookies doivent être ici en V5
+      update: true, // On garde true pour avoir les dernières définitions YouTube
+      cookies: youtubeCookies, // IMPORTANT : On réactive les cookies pour débloquer la recherche
     }),
   ],
 });
