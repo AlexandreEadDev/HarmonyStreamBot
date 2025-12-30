@@ -11,6 +11,7 @@ WORKDIR /app
 # Copie uniquement les fichiers de dépendances d'abord (pour le cache Docker)
 COPY package.json yarn.lock ./
 
+RUN apt-get update && apt-get install -y ffmpeg python3 libsodium-dev
 # Installation des paquets (frozen-lockfile assure d'installer exactement les versions du yarn.lock)
 RUN yarn install --frozen-lockfile --production
 RUN sed -i 's/noCallHome: true,//g' node_modules/@distube/yt-dlp/dist/index.js

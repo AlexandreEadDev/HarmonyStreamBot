@@ -7,7 +7,9 @@ const { DisTube } = require("distube");
 const { SpotifyPlugin } = require("@distube/spotify");
 const { DeezerPlugin } = require("@distube/deezer");
 const { YtDlpPlugin } = require("@distube/yt-dlp");
-const ffmpeg = require("ffmpeg-static");
+
+// Note : On retire ffmpeg-static car on utilise désormais le ffmpeg installé dans le Dockerfile
+// const ffmpeg = require("ffmpeg-static");
 
 // Création d'une instance globale de Client pour le bot Discord avec des configurations spécifiques
 global.client = new Client({
@@ -39,8 +41,10 @@ try {
 // Initialisation du player de musique DisTube
 client.player = new DisTube(client, {
   ffmpeg: {
-    path: ffmpeg,
+    path: "ffmpeg", // On utilise "ffmpeg" (le binaire système installé via Docker)
   },
+  // On injecte ici les options définies dans config.js (qualité, buffer)
+  ytdlOptions: client.config.opt.discordPlayer.ytdlOptions,
   emitNewSongOnly: true,
   emitAddSongWhenCreatingQueue: false,
   emitAddListWhenCreatingQueue: false,
@@ -48,8 +52,8 @@ client.player = new DisTube(client, {
     new SpotifyPlugin(),
     new DeezerPlugin(),
     new YtDlpPlugin({
-      update: true, // On garde true pour avoir les dernières définitions YouTube
-      cookies: youtubeCookies, // IMPORTANT : On réactive les cookies pour débloquer la recherche
+      update: true, // Force la mise à jour des définitions youtube
+      cookies: youtubeCookies, // Utilise les cookies pour la recherche
     }),
   ],
 });
