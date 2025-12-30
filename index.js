@@ -28,14 +28,14 @@ client.config = require("./config");
 // Initialisation du player de musique DisTube
 client.player = new DisTube(client, {
   // Le bot quitte le channel vocal si la musique s'arrête
-  leaveOnStop: client.config.opt.voiceConfig.leaveOnStop,
+  // leaveOnStop: client.config.opt.voiceConfig.leaveOnStop,
   // Le bot quitte également le channel après avoir fini de lire toutes les musiques de la file d'attente
-  leaveOnFinish: client.config.opt.voiceConfig.leaveOnFinish,
+  // leaveOnFinish: client.config.opt.voiceConfig.leaveOnFinish,
   emitNewSongOnly: true,
   emitAddSongWhenCreatingQueue: false,
   emitAddListWhenCreatingQueue: false,
   // Ajoute les plugins pour la compatibilité avec Spotify, YouTube-DLP (pour YouTube), et Deezer
-  plugins: [new SpotifyPlugin(), new YtDlpPlugin(), new DeezerPlugin()],
+  plugins: [new SpotifyPlugin(), new DeezerPlugin(), new YtDlpPlugin()],
 });
 
 // Rend le player de DisTube accessible globalement pour d'autres parties du code
