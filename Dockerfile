@@ -13,7 +13,7 @@ COPY package.json yarn.lock ./
 
 # Installation des paquets (frozen-lockfile assure d'installer exactement les versions du yarn.lock)
 RUN yarn install --frozen-lockfile --production
-
+RUN sed -i 's/noCallHome: true,//g' node_modules/@distube/yt-dlp/dist/index.js
 # Copie du reste du code du bot
 COPY . .
 
