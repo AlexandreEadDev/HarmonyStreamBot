@@ -11,13 +11,12 @@ const { YtDlpPlugin } = require("@distube/yt-dlp");
 // Création d'une instance globale de Client pour le bot Discord avec des configurations spécifiques
 global.client = new Client({
   partials: [Partials.Channel, Partials.GuildMember, Partials.User],
-  // Types d'événements que le bot surveillera
   intents: [
-    GatewayIntentBits.Guilds, // Permet de gérer les serveurs Discord (guildes)
-    GatewayIntentBits.GuildMembers, // Permet d'accéder aux membres des serveurs
-    GatewayIntentBits.GuildIntegrations, // Permet d'interagir avec les intégrations des guildes
-    GatewayIntentBits.GuildVoiceStates, // Permet de surveiller l'état des channels vocaux
-    GatewayIntentBits.MessageContent, // Souvent nécessaire pour lire le contenu des messages
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildIntegrations,
+    GatewayIntentBits.GuildVoiceStates,
+    GatewayIntentBits.MessageContent,
   ],
 });
 
@@ -26,13 +25,14 @@ client.setMaxListeners(20);
 
 client.config = require("./config");
 
-let cookies;
+// --- GESTION DES COOKIES YOUTUBE ---
+let youtubeCookies = undefined;
 try {
-  cookies = require("./cookies.json");
+  // On tente de charger le fichier cookies.json
+  youtubeCookies = require("./cookies.json");
+  console.log("✅ Cookies YouTube chargés avec succès.");
 } catch (e) {
-  console.log(
-    "Aucun fichier cookies.json trouvé, le bot risque d'être bloqué par YouTube sur un VPS."
-  );
+  console.log("⚠️ Aucun fichier cookies.json trouvé ou fichier invalide.");
 }
 
 // Initialisation du player de musique DisTube
@@ -40,14 +40,13 @@ client.player = new DisTube(client, {
   emitNewSongOnly: true,
   emitAddSongWhenCreatingQueue: false,
   emitAddListWhenCreatingQueue: false,
-  youtubeCookie: cookies,
-  // Ajoute les plugins pour la compatibilité avec Spotify, YouTube-DLP (pour YouTube), et Deezer
+  // Note: On ne met PAS youtubeCookie ici, c'est ce qui causait l'erreur INVALID_KEY
   plugins: [
     new SpotifyPlugin(),
     new DeezerPlugin(),
-    // CONFIGURATION CRITIQUE POUR YT-DLP SUR VPS
     new YtDlpPlugin({
-      update: true, // Force la mise à jour du binaire yt-dlp au démarrage pour éviter les erreurs "Deprecated"
+      update: true, // Met à jour yt-dlp pour avoir les derniers correctifs
+      cookies: youtubeCookies, // <--- C'est ICI qu'il faut mettre les cookies en v5
     }),
   ],
 });
@@ -58,5 +57,5 @@ global.player = client.player;
 // Charge des fichiers externes
 require("./loader");
 
-// Connecte le bot à Discord en utilisant le token fourni dans le fichier de configuration
+// Connecte le bot à Discord
 client.login(client.config.app.token);
