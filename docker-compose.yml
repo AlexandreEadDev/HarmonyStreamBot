@@ -1,0 +1,17 @@
+services:
+  bot:
+    # Construit l'image à partir du Dockerfile dans le dossier courant
+    build: .
+    container_name: portfolio-discordbot
+    restart: always
+
+    # Charge les variables d'environnement (TOKEN, etc.) depuis ton fichier .env
+    env_file:
+      - .env
+
+    # (Optionnel) Si tu veux accéder aux fichiers (comme config.js) sans reconstruire l'image à chaque fois
+    volumes:
+      - ./config.js:/app/config.js
+
+    # Pas besoin de section 'networks' complexe ni de 'ports'
+    # car le bot sort directement vers Internet.
