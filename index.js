@@ -14,19 +14,18 @@ const ffmpegStatic = require("ffmpeg-static");
 // Création d'une instance globale de Client pour le bot Discord avec des configurations spécifiques
 global.client = new Client({
   partials: [Partials.Channel, Partials.GuildMember, Partials.User],
-  // Types d'événements que le bot surveillera
   intents: [
-    GatewayIntentBits.Guilds, // Permet de gérer les serveurs Discord (guildes)
-    GatewayIntentBits.GuildMembers, // Permet d'accéder aux membres des serveurs
-    GatewayIntentBits.GuildIntegrations, // Permet d'interagir avec les intégrations des guildes
-    GatewayIntentBits.GuildVoiceStates, // Permet de surveiller l'état des channels vocaux
-    GatewayIntentBits.MessageContent, // Souvent nécessaire pour lire le contenu des messages
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildIntegrations,
+    GatewayIntentBits.GuildVoiceStates,
+    GatewayIntentBits.MessageContent,
   ],
 });
 
-// Max de listeners pour eviter les fuites de mémoires
 client.setMaxListeners(20);
 
+// Chargement de la config (qui sera accessible via client.config partout)
 client.config = require("./config");
 
 // --- CHARGEMENT DES COOKIES ---
@@ -38,14 +37,13 @@ try {
   console.log("⚠️ Aucun fichier cookies.json trouvé.");
 }
 
-// Initialisation du player de musique DisTube
+// Initialisation du player DisTube
 client.player = new DisTube(client, {
   ffmpeg: {
-    // CONDITION HYBRIDE :
-    // Si on est sur Windows (local), on utilise le chemin fourni par ffmpeg-static.
-    // Si on est sur Linux (Docker), on utilise "ffmpeg" (supposé installé dans le système via Dockerfile).
+    // Windows (Local) -> ffmpeg-static | Linux (Docker) -> "ffmpeg" global
     path: process.platform === "win32" ? ffmpegStatic : "ffmpeg",
   },
+  // NOTE: Les options leaveOnEmpty/leaveOnFinish sont gérées manuellement dans src/events.js
   emitNewSongOnly: true,
   emitAddSongWhenCreatingQueue: false,
   emitAddListWhenCreatingQueue: false,
@@ -53,17 +51,20 @@ client.player = new DisTube(client, {
     new SpotifyPlugin(),
     new DeezerPlugin(),
     new YtDlpPlugin({
-      update: true, // Force la mise à jour des définitions youtube
-      cookies: youtubeCookies, // Utilise les cookies pour la recherche
+      update: true,
+      cookies: youtubeCookies,
     }),
   ],
 });
 
-// Rend le player de DisTube accessible globalement pour d'autres parties du code
+// Variables globales
 global.player = client.player;
 
-// Charge des fichiers externes
+// --- IMPORTANT : Chargement des événements DisTube (src/events.js) ---
+require("./src/events");
+
+// Charge le loader (Commandes & Events Discord classiques)
 require("./loader");
 
-// Connecte le bot à Discord en utilisant le token fourni dans le fichier de configuration
+// Connexion
 client.login(client.config.app.token);
