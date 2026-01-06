@@ -8,8 +8,8 @@ const { SpotifyPlugin } = require("@distube/spotify");
 const { DeezerPlugin } = require("@distube/deezer");
 const { YtDlpPlugin } = require("@distube/yt-dlp");
 
-// Note : On retire ffmpeg-static car on utilise désormais le ffmpeg installé dans le Dockerfile
-// const ffmpeg = require("ffmpeg-static");
+// Importation de ffmpeg-static pour l'environnement local (Windows)
+const ffmpegStatic = require("ffmpeg-static");
 
 // Création d'une instance globale de Client pour le bot Discord avec des configurations spécifiques
 global.client = new Client({
@@ -41,7 +41,10 @@ try {
 // Initialisation du player de musique DisTube
 client.player = new DisTube(client, {
   ffmpeg: {
-    path: "ffmpeg", // On utilise "ffmpeg" (le binaire système installé via Docker)
+    // CONDITION HYBRIDE :
+    // Si on est sur Windows (local), on utilise le chemin fourni par ffmpeg-static.
+    // Si on est sur Linux (Docker), on utilise "ffmpeg" (supposé installé dans le système via Dockerfile).
+    path: process.platform === "win32" ? ffmpegStatic : "ffmpeg",
   },
   emitNewSongOnly: true,
   emitAddSongWhenCreatingQueue: false,
